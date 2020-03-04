@@ -29,20 +29,11 @@ require 'koneksi.php';
 		<td>Name</td>
 	</tr>
 
-
 	<?php 
-	if (isset($_GET['cari'])) {
+		if (isset($_GET['cari'])) {
 		$cari = $_GET['cari'];
-		$data = mysqli_query($con,"select*from article, article_category where articleTitle like '%".$cari."%'");
-	} else {
-		$data =mysqli_query($con,"select*from article");
-	}
-	$no = 1;
-	while($d = mysqli_fetch_assoc($data)) {
-	?>
-	<?php } ?> 
-
-	<?php 
+		}
+		
 	$halaman = 4;
 	$page = isset($_GET["halaman"])?(int)$_GET["halaman"]:1;
 	$mulai = ($page>1)?($page*$halaman)-$halaman:0;
@@ -59,7 +50,7 @@ require 'koneksi.php';
 }
 echo "Total Record : <b>$total</b>";
 
-	$query = mysqli_query($con,"select*from article,article_category WHERE article_category.categoryId=article.articleCategoryId limit $mulai, 
+	$query = mysqli_query($con,"select*from article,article_category WHERE articleTitle like '%".$cari."%' and article_category.categoryId=article.articleCategoryId limit $mulai, 
 		$halaman") or die (mysqli_error);
 	$no = $mulai+1;
 
